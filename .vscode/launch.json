@@ -1,0 +1,33 @@
+{
+    // 使用 IntelliSense 了解相关属性。 
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "(gdb) 启动",
+            "type": "cppdbg",
+            "request": "launch",
+            //这个就是需要调试的可执行文件
+            "program": "${workspaceFolder}/server",
+            //"args": ["-a", "1"],这里的参数格式这样设计。
+            "args": [],
+            "stopAtEntry": false,
+            //这个的意思是开始launch之前需要进入的目录
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            //在运行launch.json之前运行的tasks
+            "preLaunchTask": "Build",
+            "setupCommands": [
+                {
+                    "description": "为 gdb 启用整齐打印",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        }
+        
+    ]
+}

@@ -1,0 +1,44 @@
+{   
+    "version": "2.0.0",
+    "options": {
+        "cwd": "${workspaceFolder}/build"
+    },
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "cmake",
+            "command": "cmake",
+            "args": [
+                ".."
+            ]
+        },
+        {
+            "label": "make",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "command": "make",
+            "args": [
+
+            ]
+        },
+        {
+            "label": "mv",
+            "command": "mv",
+            "args": [
+                "server",
+                "../"
+            ]
+        },
+        {
+            "label": "Build",
+			"dependsOrder": "sequence", // 按列出的顺序执行任务依赖项,因此要运行这个任务，必须将依赖都运行完
+            "dependsOn":[
+                "cmake",
+                "make",
+                "mv"
+            ]
+        }
+    ]
+}
