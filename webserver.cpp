@@ -39,12 +39,6 @@ void WebServer::init(int port, string user, string passWord, string databaseName
     m_thread_num = thread_num;
 }
 
-void WebServer::trig_mode()
-{
-        m_LISTENTrigmode = 1;
-        m_CONNTrigmode = 1;
-}
-
 void WebServer::log_write()
 {
     //初始化日志
