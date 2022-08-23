@@ -135,26 +135,20 @@ void threadpool<T>::run()
             {
                 if (request->read_once())//读取数据成功
                 {
-                    request->improv = 1;
+
                     connectionRAII mysqlcon(&request->mysql, m_connPool);
                     request->process();
                 }
                 else//读取数据失败，主线程会负责关闭这个连接。
                 {
-                    request->improv = 1;
-                    request->timer_flag = 1;
+                    request->deal_timer();
                 }
             }
             else
             {
-                if (request->write())//写事件
+                if (!request->write())//写事件
                 {
-                    request->improv = 1;
-                }
-                else
-                {
-                    request->improv = 1;
-                    request->timer_flag = 1;
+                    request->deal_timer();
                 }
             }
         

@@ -4,9 +4,9 @@
 time_heap::time_heap()
 {
     cur_size = 0;
-    capacity = 100;
-    array = new heap_timer*[100];
-    for(int i = 0; i < 100; i++) {
+    capacity = 10000;
+    array = new heap_timer*[capacity];
+    for(int i = 0; i < capacity; i++) {
         array[i] = NULL;
     }
 }

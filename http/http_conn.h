@@ -81,7 +81,7 @@ public:
 
 public:
     //初始化套接字地址，函数内部会调用私有方法init
-    void init(int sockfd, const sockaddr_in &addr, char *, int, int, string user, string passwd, string sqlname);
+    void init(int sockfd, const sockaddr_in &addr, char *, int, int, string user, string passwd, string sqlname, heap_timer* time);
     //关闭http连接
     void close_conn(bool real_close = true);
     void process();
@@ -132,8 +132,9 @@ private:
     bool add_content_length(int content_length);
     bool add_linger();
     bool add_blank_line();
-
+    
 public:
+    void deal_timer();
     //所有socket上的事件都被注册到一个epoll内核事件表中，所以将epoll文件描述符设置为静态的
     static int m_epollfd;
     //统计用户数量，同上
@@ -141,6 +142,8 @@ public:
     MYSQL *mysql;
     int m_state;  //读为0, 写为1
     int m_sockfd;
+    heap_timer *timer;
+    Utils utils;
 private:
     
     sockaddr_in m_address;

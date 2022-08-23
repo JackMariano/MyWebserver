@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.0)
 set(CMAKE_CXX_COMPILER "g++")
 #设置变量
 #set(SRC main.cpp   ./timer/lst_timer.cpp ./http/http_conn.cpp ./log/log.cpp ./CGImysql/sql_connection_pool.cpp  ./threadpool/threadpool.cpp  config.cpp webserver.cpp)
-set(SRC main.cpp  ./timer/lst_timer.cpp ./http/http_conn.cpp ./log/log.cpp ./CGImysql/sql_connection_pool.cpp  webserver.cpp config.cpp)
+set(SRC main.cpp  ./timer/lst_timer.cpp ./http/http_conn.cpp ./log/log.cpp ./CGImysql/sql_connection_pool.cpp webserver.cpp config.cpp )
 #项目名称
 project(tinywebserver)
 #指定头文件搜索路径，相当与GCC的-I

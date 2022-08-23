@@ -24,6 +24,7 @@
 #include <time.h>
 #include "../log/log.h"
 
+#include "../lock/locker.h"
 class heap_timer;
 
 struct client_data//用户数据结构
@@ -53,7 +54,7 @@ public:
 
     void add_timer(heap_timer *timer);//添加定时器
     void percolate_down(int hole);//下沉操作，定时器应用领域不需要用到上浮
-    void resize();//模仿
+    void resize();//模仿vector的扩容机制
     heap_timer* top();
     void pop_timer();
     void del_timer(heap_timer *timer);//删除定时器

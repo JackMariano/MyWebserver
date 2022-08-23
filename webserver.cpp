@@ -115,8 +115,7 @@ void WebServer::eventListen()
 
 void WebServer::timer(int connfd, struct sockaddr_in client_address)
 {
-    users[connfd].init(connfd, client_address, m_root, m_CONNTrigmode, m_close_log, m_user, m_passWord, m_databaseName);
-
+    
     //初始化client_data数据
     //创建定时器，设置回调函数和超时时间，绑定用户数据，将定时器添加到链表中
     users_timer[connfd].address = client_address;
@@ -128,6 +127,9 @@ void WebServer::timer(int connfd, struct sockaddr_in client_address)
     timer->expire = cur + 3 * TIMESLOT;
     users_timer[connfd].timer = timer;
     utils.m_timer_lst.add_timer(timer);
+    //初始化connfd对象
+    users[connfd].init(connfd, client_address, m_root, m_CONNTrigmode, m_close_log, m_user, m_passWord, m_databaseName, timer);
+
 }
 
 //若有数据传输，则将定时器往后延迟3个单位
@@ -143,7 +145,10 @@ void WebServer::adjust_timer(heap_timer *timer)
 
 void WebServer::deal_timer(heap_timer *timer, int sockfd)
 {
-    timer->cb_func(&users_timer[sockfd]);
+    if(timer->cb_func != NULL) {
+        timer->cb_func(&users_timer[sockfd]);
+    }
+
     if (timer)
     {
         utils.m_timer_lst.del_timer(timer);
@@ -221,22 +226,8 @@ void WebServer::dealwithread(int sockfd)
     {
         adjust_timer(timer);
     }
-
     //若监测到读事件，将该事件放入请求队列
     m_pool->append(users + sockfd, 0);
-    while (true)
-    {
-        if (1 == users[sockfd].improv)
-        {
-            if (1 == users[sockfd].timer_flag)
-            {
-                deal_timer(timer, sockfd);
-                users[sockfd].timer_flag = 0;
-            }
-            users[sockfd].improv = 0;
-            break;
-        }
-    }
 }
 
 void WebServer::dealwithwrite(int sockfd)
@@ -247,22 +238,7 @@ void WebServer::dealwithwrite(int sockfd)
     {
         adjust_timer(timer);
     }
-
     m_pool->append(users + sockfd, 1);
-
-    while (true)
-    {
-        if (1 == users[sockfd].improv)
-        {
-            if (1 == users[sockfd].timer_flag)
-            {
-                deal_timer(timer, sockfd);
-                users[sockfd].timer_flag = 0;
-            }
-            users[sockfd].improv = 0;
-            break;
-        }
-    }
 }
 
 void WebServer::eventLoop()

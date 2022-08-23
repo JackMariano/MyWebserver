@@ -1,0 +1,3 @@
+/home/huhao/project/TinyWebServer-master/build/CMakeFiles/server.dir
+/home/huhao/project/TinyWebServer-master/build/CMakeFiles/edit_cache.dir
+/home/huhao/project/TinyWebServer-master/build/CMakeFiles/rebuild_cache.dir

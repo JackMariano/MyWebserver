@@ -85,7 +85,7 @@ void modfd(int epollfd, int fd, int ev, int TRIGMode)
 {
     epoll_event event;
     event.data.fd = fd;
-        event.events = ev | EPOLLET | EPOLLONESHOT | EPOLLRDHUP;
+    event.events = ev | EPOLLET | EPOLLONESHOT | EPOLLRDHUP;
     epoll_ctl(epollfd, EPOLL_CTL_MOD, fd, &event);
 }
 
@@ -106,13 +106,13 @@ void http_conn::close_conn(bool real_close)
 
 //初始化连接,外部调用初始化套接字地址
 void http_conn::init(int sockfd, const sockaddr_in &addr, char *root, int TRIGMode,
-                     int close_log, string user, string passwd, string sqlname)
+                     int close_log, string user, string passwd, string sqlname, heap_timer *time)
 {
     m_sockfd = sockfd;
     m_address = addr;
     addfd(m_epollfd, sockfd, true, m_TRIGMode);
     m_user_count++;
-
+    timer = time;
     //当浏览器出现连接重置时，可能是网站根目录出错或http响应格式出错或者访问的文件中内容完全为空
     doc_root = root;
     m_TRIGMode = TRIGMode;
@@ -620,18 +620,22 @@ bool http_conn::write()
         {
             unmap();
             //在epoll树上重置EPOLLONESHOT事件
-            modfd(m_epollfd, m_sockfd, EPOLLIN, m_TRIGMode);
+            
             //浏览器的请求为长连接
             if (m_linger)
             {
+                modfd(m_epollfd, m_sockfd, EPOLLIN, m_TRIGMode);
                 //重新初始化HTTP对象
                 init();
                 return true;
             }
             else
             {
+                modfd(m_epollfd, m_sockfd, EPOLLIN, m_TRIGMode);
                 return false;
             }
+            
+            
         }
     }
 }
@@ -789,4 +793,17 @@ void http_conn::process()
     }
     //注册并监听写事件
     modfd(m_epollfd, m_sockfd, EPOLLOUT, m_TRIGMode);
+}
+
+void http_conn::deal_timer()
+{
+    if(timer->cb_func != NULL) {
+        timer->cb_func(timer->user_data);
+    }
+    if (timer)
+    {
+        utils.m_timer_lst.del_timer(timer);
+    }
+
+    LOG_INFO("close fd %d", m_sockfd);
 }
