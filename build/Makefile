@@ -153,29 +153,29 @@ CGImysql/sql_connection_pool.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/CGImysql/sql_connection_pool.cpp.s
 .PHONY : CGImysql/sql_connection_pool.cpp.s
 
-config.o: config.cpp.o
-.PHONY : config.o
+config/config.o: config/config.cpp.o
+.PHONY : config/config.o
 
 # target to build an object file
-config.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/config.cpp.o
-.PHONY : config.cpp.o
+config/config.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/config/config.cpp.o
+.PHONY : config/config.cpp.o
 
-config.i: config.cpp.i
-.PHONY : config.i
+config/config.i: config/config.cpp.i
+.PHONY : config/config.i
 
 # target to preprocess a source file
-config.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/config.cpp.i
-.PHONY : config.cpp.i
+config/config.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/config/config.cpp.i
+.PHONY : config/config.cpp.i
 
-config.s: config.cpp.s
-.PHONY : config.s
+config/config.s: config/config.cpp.s
+.PHONY : config/config.s
 
 # target to generate assembly for a file
-config.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/config.cpp.s
-.PHONY : config.cpp.s
+config/config.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/config/config.cpp.s
+.PHONY : config/config.cpp.s
 
 http/http_conn.o: http/http_conn.cpp.o
 .PHONY : http/http_conn.o
@@ -273,29 +273,29 @@ timer/lst_timer.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/timer/lst_timer.cpp.s
 .PHONY : timer/lst_timer.cpp.s
 
-webserver.o: webserver.cpp.o
-.PHONY : webserver.o
+webserver/webserver.o: webserver/webserver.cpp.o
+.PHONY : webserver/webserver.o
 
 # target to build an object file
-webserver.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/webserver.cpp.o
-.PHONY : webserver.cpp.o
+webserver/webserver.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/webserver/webserver.cpp.o
+.PHONY : webserver/webserver.cpp.o
 
-webserver.i: webserver.cpp.i
-.PHONY : webserver.i
+webserver/webserver.i: webserver/webserver.cpp.i
+.PHONY : webserver/webserver.i
 
 # target to preprocess a source file
-webserver.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/webserver.cpp.i
-.PHONY : webserver.cpp.i
+webserver/webserver.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/webserver/webserver.cpp.i
+.PHONY : webserver/webserver.cpp.i
 
-webserver.s: webserver.cpp.s
-.PHONY : webserver.s
+webserver/webserver.s: webserver/webserver.cpp.s
+.PHONY : webserver/webserver.s
 
 # target to generate assembly for a file
-webserver.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/webserver.cpp.s
-.PHONY : webserver.cpp.s
+webserver/webserver.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/webserver/webserver.cpp.s
+.PHONY : webserver/webserver.cpp.s
 
 # Help Target
 help:
@@ -309,9 +309,9 @@ help:
 	@echo "... CGImysql/sql_connection_pool.o"
 	@echo "... CGImysql/sql_connection_pool.i"
 	@echo "... CGImysql/sql_connection_pool.s"
-	@echo "... config.o"
-	@echo "... config.i"
-	@echo "... config.s"
+	@echo "... config/config.o"
+	@echo "... config/config.i"
+	@echo "... config/config.s"
 	@echo "... http/http_conn.o"
 	@echo "... http/http_conn.i"
 	@echo "... http/http_conn.s"
@@ -324,9 +324,9 @@ help:
 	@echo "... timer/lst_timer.o"
 	@echo "... timer/lst_timer.i"
 	@echo "... timer/lst_timer.s"
-	@echo "... webserver.o"
-	@echo "... webserver.i"
-	@echo "... webserver.s"
+	@echo "... webserver/webserver.o"
+	@echo "... webserver/webserver.i"
+	@echo "... webserver/webserver.s"
 .PHONY : help
 
 

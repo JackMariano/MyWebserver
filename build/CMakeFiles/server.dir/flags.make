@@ -6,5 +6,5 @@ CXX_DEFINES =
 
 CXX_INCLUDES = -I/home/huhao/project/TinyWebServer-master
 
-CXX_FLAGS = -g -Wall
+CXX_FLAGS =  -g -O2 -Wall -g -Wall
 
