@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
     string databasename = "yourdb";
     //命令行解析
     Config config;
-    config.parse_arg(argc, argv);
+    //config.parse_arg(argc, argv);
     //data data1;
     //data1.init();
     //data1.test(4);

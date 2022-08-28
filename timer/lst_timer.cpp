@@ -4,7 +4,7 @@
 time_heap::time_heap()
 {
     cur_size = 0;
-    capacity = 10000;
+    capacity = 10000;//初始容量设置为10000
     array = new heap_timer*[capacity];
     for(int i = 0; i < capacity; i++) {
         array[i] = NULL;
@@ -49,12 +49,14 @@ void time_heap::del_timer(heap_timer *timer)
     }
     timer->cb_func = NULL;
 }
+
 heap_timer* time_heap::top() {
     if(empty()) {
         return NULL;
     }
     return array[0];
 }
+
 void time_heap::pop_timer() {
     if(empty()) {
         return;
@@ -68,14 +70,19 @@ void time_heap::pop_timer() {
         percolate_down(0);
     }
 }
+
 void time_heap::adjust_timer(heap_timer* timer) {
     percolate_down(hash[timer]);
 }
+
+
 void time_heap::swap_timer(int i, int j) {
     std::swap(array[i], array[j]);
     hash[array[i]] = j;
     hash[array[j]] = i;
 }
+
+//下沉操作，父节点与子节点比较
 void time_heap::percolate_down(int hole) {
     heap_timer* temp = array[hole];
     int child = 0;
