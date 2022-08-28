@@ -28,8 +28,7 @@ WebServer::~WebServer()
     delete m_pool;
 }
 
-void WebServer::init(int port, string user, string passWord, string databaseName, int log_write, 
-                     int opt_linger, int trigmode, int sql_num, int thread_num, int close_log, int actor_model)
+void WebServer::init(int port, string user, string passWord, string databaseName, int sql_num, int thread_num)
 {
     m_port = port;
     m_user = user;
@@ -42,14 +41,14 @@ void WebServer::init(int port, string user, string passWord, string databaseName
 void WebServer::log_write()
 {
     //初始化日志
-    Log::get_instance()->init("./ServerLog", m_close_log, 2000, 800000, 800);
+    Log::get_instance()->init("./ServerLog", 0, 2000, 800000, 800);
 }
 
 void WebServer::sql_pool()
 {
     //初始化数据库连接池
     m_connPool = connection_pool::GetInstance();
-    m_connPool->init("localhost", m_user, m_passWord, m_databaseName, 3306, m_sql_num, m_close_log);
+    m_connPool->init("localhost", m_user, m_passWord, m_databaseName, 3306, m_sql_num, 0);
 
     //初始化数据库读取表
     users->initmysql_result(m_connPool);
@@ -58,7 +57,7 @@ void WebServer::sql_pool()
 void WebServer::thread_pool()
 {
     //线程池
-    m_pool = new threadpool<http_conn>(m_actormodel, m_connPool, m_thread_num);
+    m_pool = new threadpool<http_conn>(1, m_connPool, m_thread_num);
 }
 
 void WebServer::eventListen()
@@ -94,7 +93,7 @@ void WebServer::eventListen()
     m_epollfd = epoll_create(5);
     assert(m_epollfd != -1);
 
-    utils.addfd(m_epollfd, m_listenfd, false, m_LISTENTrigmode);
+    utils.addfd(m_epollfd, m_listenfd, false, 1);
     http_conn::m_epollfd = m_epollfd;
 
     ret = socketpair(PF_UNIX, SOCK_STREAM, 0, m_pipefd);
@@ -128,7 +127,7 @@ void WebServer::timer(int connfd, struct sockaddr_in client_address)
     users_timer[connfd].timer = timer;
     utils.m_timer_lst.add_timer(timer);
     //初始化connfd对象
-    users[connfd].init(connfd, client_address, m_root, m_CONNTrigmode, m_close_log, m_user, m_passWord, m_databaseName, timer);
+    users[connfd].init(connfd, client_address, m_root, 1, 0, m_user, m_passWord, m_databaseName, timer);
 
 }
 
