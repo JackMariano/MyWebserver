@@ -96,7 +96,7 @@ void WebServer::eventListen()
     utils.addfd(m_epollfd, m_listenfd, false, 1);
     http_conn::m_epollfd = m_epollfd;
 
-    ret = socketpair(PF_UNIX, SOCK_STREAM, 0, m_pipefd);
+    ret = socketpair(PF_UNIX, SOCK_STREAM, 0, m_pipefd);//创建双向管道
     assert(ret != -1);
     utils.setnonblocking(m_pipefd[1]);
     utils.addfd(m_epollfd, m_pipefd[0], false, 0);

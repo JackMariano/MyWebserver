@@ -161,7 +161,7 @@ void Utils::addfd(int epollfd, int fd, bool one_shot, int TRIGMode)
     //设置一个socket连接在任一时刻都只能被一个线程处理
     if (one_shot)
         event.events |= EPOLLONESHOT;
-    //设置描述符为非阻赛
+    //设置描述符为非阻塞
     setnonblocking(fd);
     //添加事件
     epoll_ctl(epollfd, EPOLL_CTL_ADD, fd, &event);
