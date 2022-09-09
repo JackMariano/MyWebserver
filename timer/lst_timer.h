@@ -46,7 +46,7 @@ public:
     client_data *user_data;//用户数据
 };
 
-class time_heap//最小堆定时器
+class time_heap//基于最小堆实现的定时器
 {
 public:
     time_heap();

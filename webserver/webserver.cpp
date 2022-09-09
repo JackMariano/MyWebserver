@@ -114,7 +114,6 @@ void WebServer::eventListen()
 
 void WebServer::timer(int connfd, struct sockaddr_in client_address)
 {
-    
     //初始化client_data数据
     //创建定时器，设置回调函数和超时时间，绑定用户数据，将定时器添加到链表中
     users_timer[connfd].address = client_address;
@@ -128,7 +127,6 @@ void WebServer::timer(int connfd, struct sockaddr_in client_address)
     utils.m_timer_lst.add_timer(timer);
     //初始化connfd对象
     users[connfd].init(connfd, client_address, m_root, 1, 0, m_user, m_passWord, m_databaseName, timer);
-
 }
 
 //若有数据传输，则将定时器往后延迟3个单位
@@ -136,7 +134,7 @@ void WebServer::timer(int connfd, struct sockaddr_in client_address)
 void WebServer::adjust_timer(heap_timer *timer)
 {
     time_t cur = time(NULL);
-    timer->expire = cur + 3 * TIMESLOT;
+    timer->expire = cur + 3 * TIMESLOT;//这里使用的是绝对时间
     utils.m_timer_lst.adjust_timer(timer);
 
     LOG_INFO("%s", "adjust timer once");
@@ -144,7 +142,7 @@ void WebServer::adjust_timer(heap_timer *timer)
 
 void WebServer::deal_timer(heap_timer *timer, int sockfd)
 {
-    if(timer->cb_func != NULL) {
+    if(timer->cb_func != NULL) { //这里需要进行判断，因为定时器可能使用了延迟删除方法
         timer->cb_func(&users_timer[sockfd]);
     }
 
