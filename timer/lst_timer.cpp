@@ -47,7 +47,7 @@ void time_heap::del_timer(heap_timer *timer)
     {
         return;
     }
-    timer->cb_func = NULL;
+    timer->cb_func = NULL;//延时删除
 }
 
 heap_timer* time_heap::top() {
